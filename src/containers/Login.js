@@ -24,7 +24,9 @@ export default function Login(props) {
             props.userHasAuthenticated(true);
             props.history.push("/");
         } catch (e) {
-            alert(e.message);}
+            alert(e.message);
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -36,14 +38,14 @@ export default function Login(props) {
                          autoFocus
                          type="email"
                          value={fields.email}
-                         onChange={e => handleFieldChange(e.target.value)}
+                         onChange={handleFieldChange}
                     />
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
                     <ControlLabel>Password</ControlLabel>
                     <FormControl
                         value={fields.password}
-                        onChange={e => handleFieldChange(e.target.value)}
+                        onChange={handleFieldChange}
                         type="password"
                     />
                 </FormGroup>
