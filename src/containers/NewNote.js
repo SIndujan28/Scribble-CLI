@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import { API } from "aws-amplify";
 
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
@@ -22,11 +22,22 @@ export default function NewNote(props) {
     async function handleSubmit(event) {
         event.preventDefault();
         if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
-        alert(`Please pick a file smaller than${config.MAX_ATTACHMENT_SIZE /1000000} MB.`);
-        return;
+            alert(`Please pick a file smaller than${config.MAX_ATTACHMENT_SIZE /1000000} MB.`);
+            return;
         }
         setIsLoading(true);
+        try {
+            await createNote({ content });
+            props.history.push("/");
+        } catch (e) {
+            alert(e);
+            setIsLoading(false);
         }
+    }
+
+    function createNote(note) {
+        return API.post("notes", "/notes", { body: note});
+    }
 
     return (
         <div className="NewNote">
