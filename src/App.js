@@ -40,13 +40,19 @@ function App(props) {
      <Navbar fluid collapseOnSelect>
        <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">Scratch</Link>
+            <Link to="/">Scribble</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {isAuthenticated ? <NavItem onClick={handleLogout}>Logout</NavItem> 
+            {isAuthenticated ? 
+              <>
+                <LinkContainer to="/settings">
+                  <NavItem>Settings</NavItem>
+                </LinkContainer>
+                <NavItem onClick={handleLogout}>Logout</NavItem>
+              </> 
             : <>
                 <LinkContainer to="/signup">
                   <NavItem>Signup</NavItem>
